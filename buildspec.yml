@@ -6,13 +6,12 @@ phases:
       nodejs: 22 # or 20 if supported
     commands:
       - echo "Installing dependencies..."
-      - npm ci # clean install for reproducible builds
+      - npm ci --legacy-peer-deps # clean install for reproducible builds
 
   build:
     commands:
       - echo "Building Vite React app..."
       - npm run build
-      - echo "Build completed successfully."
 
 artifacts:
   files:
