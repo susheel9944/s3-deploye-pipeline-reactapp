@@ -1,0 +1,27 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22 # or 20 if supported
+    commands:
+      - echo "Installing dependencies..."
+      - npm ci # clean install for reproducible builds
+
+  build:
+    commands:
+      - echo "Building Vite React app..."
+      - npm run build
+      - echo "Build completed successfully."
+
+  post_build:
+    commands:
+      - echo "Deploying to S3..."
+      - aws s3 sync dist/ s3://YOUR_S3_BUCKET_NAME --delete
+      - echo "S3 upload complete."
+
+artifacts:
+  files:
+    - "**/*"
+  base-directory: dist
+  discard-paths: no
